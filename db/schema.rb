@@ -10,9 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_05_074022) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_05_095028) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "bookings", force: :cascade do |t|
+    t.bigint "bus_schedule_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "number_of_seats"
+    t.string "passenger_email"
+    t.string "passenger_name"
+    t.decimal "total_price", precision: 10, scale: 2
+    t.datetime "updated_at", null: false
+    t.index ["bus_schedule_id"], name: "index_bookings_on_bus_schedule_id"
+  end
+
+  create_table "bus_schedules", force: :cascade do |t|
+    t.datetime "arrival_time"
+    t.integer "available_seats"
+    t.bigint "bus_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "departure_time"
+    t.bigint "route_id", null: false
+    t.decimal "seat_price"
+    t.integer "status", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.index ["bus_id"], name: "index_bus_schedules_on_bus_id"
+    t.index ["route_id"], name: "index_bus_schedules_on_route_id"
+  end
 
   create_table "buses", force: :cascade do |t|
     t.integer "capacity"
@@ -20,6 +45,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_05_074022) do
     t.string "model"
     t.string "plate_number"
     t.datetime "updated_at", null: false
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.decimal "amount", precision: 10, scale: 2
+    t.bigint "booking_id", null: false
+    t.datetime "created_at", null: false
+    t.string "payment_method"
+    t.integer "status", default: 0
+    t.datetime "updated_at", null: false
+    t.index ["booking_id"], name: "index_payments_on_booking_id"
   end
 
   create_table "provinces", force: :cascade do |t|
@@ -36,4 +71,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_05_074022) do
     t.integer "origin_province_id"
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "bookings", "bus_schedules"
+  add_foreign_key "bus_schedules", "buses"
+  add_foreign_key "bus_schedules", "routes"
+  add_foreign_key "payments", "bookings"
 end
