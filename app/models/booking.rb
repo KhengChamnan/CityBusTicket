@@ -2,6 +2,7 @@ class Booking < ApplicationRecord
   before_validation :calculate_total_price
   belongs_to :bus_schedule
   has_one :payment
+  enum :status, { pending: 0, confirmed: 1, cancelled: 2 }
   validates :passenger_name, presence: true
   validates :number_of_seats, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :passenger_email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }

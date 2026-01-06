@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     resources :buses
     resources :bus_schedules do
       collection do
-        get 'by_route'
+        get "by_route"
       end
     end
     resources :routes
