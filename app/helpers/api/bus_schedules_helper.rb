@@ -1,0 +1,2 @@
+module Api::BusSchedulesHelper
+end
