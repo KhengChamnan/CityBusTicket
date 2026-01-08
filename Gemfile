@@ -23,6 +23,9 @@ gem "bcrypt", "~> 3.1.7"
 # Use JWT for API authentication [https://github.com/jwt/ruby-jwt]
 gem "jwt"
 
+# DB ERD Diagram tool
+gem "rails-erd"
+
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS) for mobile clients
 gem "rack-cors"
 

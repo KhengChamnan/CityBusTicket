@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_08_013609) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_08_044633) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -23,7 +23,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_08_013609) do
     t.integer "status"
     t.decimal "total_price", precision: 10, scale: 2
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["bus_schedule_id"], name: "index_bookings_on_bus_schedule_id"
+    t.index ["user_id"], name: "index_bookings_on_user_id"
   end
 
   create_table "bus_schedules", force: :cascade do |t|
@@ -84,6 +86,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_08_013609) do
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.decimal "credit"
     t.string "email_address", null: false
     t.string "password_digest", null: false
     t.datetime "updated_at", null: false
@@ -91,6 +94,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_08_013609) do
   end
 
   add_foreign_key "bookings", "bus_schedules"
+  add_foreign_key "bookings", "users"
   add_foreign_key "bus_schedules", "buses"
   add_foreign_key "bus_schedules", "routes"
   add_foreign_key "payments", "bookings"
