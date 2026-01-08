@@ -1,3 +1,2 @@
-class Api::BusesController < ApplicationController
-  
+class Api::BusesController < Api::BaseController
 end

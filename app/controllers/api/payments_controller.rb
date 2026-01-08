@@ -1,2 +1,2 @@
-class Api::PaymentsController < ApplicationController
+class Api::PaymentsController < Api::BaseController
 end

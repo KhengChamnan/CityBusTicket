@@ -1,0 +1,25 @@
+<!-- app/views/bus_schedules/index.html.erb -->
+<%= link_to "Logout", session_path, data: { turbo_method: :delete }, class: "btn btn-danger" %>
+
+<h1>Bus Schedules</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Bus</th>
+      <th>Origin</th>
+      <th>Destination</th>
+      <th>Departure Time</th>
+    </tr>   
+  </thead>
+  <tbody>
+    <% @bus_schedules.each do |schedule| %>
+      <tr>
+        <td><%= schedule.bus.plate_number %></td>
+        <td><%= schedule.route.origin_province.name %></td>
+        <td><%= schedule.route.destination_province.name %></td>
+        <td><%= schedule.departure_time %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,4 +1,4 @@
-class Api::RoutesController < ApplicationController
+class Api::RoutesController < Api::BaseController
   def index
     routes = Route.includes(:origin_province, :destination_province)
     render json: routes.map { |route|

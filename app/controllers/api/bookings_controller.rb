@@ -1,5 +1,4 @@
-class Api::BookingsController < ApplicationController
-  skip_before_action :verify_authenticity_token
+class Api::BookingsController < Api::BaseController
   def index
     bookings = Booking.includes(bus_schedule: [ :bus, :route ], payment: [])
     render json: bookings.map { |booking|
