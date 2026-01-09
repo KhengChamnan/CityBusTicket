@@ -15,7 +15,7 @@ module Api
       else
         render json: {
           error: "Registration failed ",
-          errors: user.errors.full_messages
+          errors: user.errors.full_messages 
         }, status: :unprocessable_entity
       end
     end
@@ -23,7 +23,7 @@ module Api
     private
 
     def user_params
-      params.permit(:email_address, :password, :password_confirmation)
+      params.permit(:email_address, :password, :password_confirmation, :full_name)
     end
   end
 end
