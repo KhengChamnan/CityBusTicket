@@ -5,7 +5,7 @@ class Api::BookingsController < Api::BaseController
 
   # create booking
   def create
-    booking_params = params.require(:booking).permit(:bus_schedule_id, :passenger_name, :passenger_email, :number_of_seats, :status)
+    booking_params = params.require(:booking).permit(:bus_schedule_id, :passenger_name, :passenger_email, :passenger_phone_number, :number_of_seats, :status)
     booking = Booking.new(booking_params)
     booking.user = @current_user
     booking.status = :pending

@@ -1,5 +1,5 @@
 json.array! @bookings do |booking|
-  json.extract! booking, :id, :passenger_name, :passenger_email, :number_of_seats, :status
+  json.extract! booking, :id, :passenger_name, :passenger_email, :number_of_seats, :status, :passenger_phone_number
 
   json.departure_time booking.bus_schedule.departure_time
   json.bus booking.bus_schedule.bus.plate_number

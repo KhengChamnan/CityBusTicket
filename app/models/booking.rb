@@ -7,6 +7,7 @@ class Booking < ApplicationRecord
   validates :passenger_name, presence: true
   validates :number_of_seats, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :passenger_email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :passenger_phone_number, presence: true
 
   private
   def calculate_total_price

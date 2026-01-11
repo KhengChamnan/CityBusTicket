@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_09_094114) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_11_102358) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -20,6 +20,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_09_094114) do
     t.integer "number_of_seats"
     t.string "passenger_email"
     t.string "passenger_name"
+    t.string "passenger_phone_number"
     t.integer "status"
     t.decimal "total_price", precision: 10, scale: 2
     t.datetime "updated_at", null: false
