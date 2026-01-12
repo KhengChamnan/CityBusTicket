@@ -9,9 +9,21 @@ class Booking < ApplicationRecord
   validates :passenger_email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :passenger_phone_number, presence: true
 
+  # callback for realtime update
+  after_create_commit :broadcast_new_booking
+
   private
   def calculate_total_price
     seat_price = bus_schedule.seat_price
     self.total_price = seat_price * number_of_seats
+  end
+  # when new booking created add to top of list
+  def broadcast_new_booking
+    broadcast_prepend_later_to(
+      "bookings",
+      target: "bookings_table",
+      partial: "admin/bookings/booking_row",
+      locals: { booking: self }
+    )
   end
 end

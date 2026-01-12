@@ -2,6 +2,9 @@
 
 <% content_for(:page_title, "Bookings") %>
 
+<%# using turbo stream%>
+<%= turbo_stream_from "bookings" %>
+
 <%# Page Header %>
 <div class="mb-6">
   <p class="text-gray-600">View all customer bookings</p>
@@ -35,48 +38,9 @@
         </th>
       </tr>
     </thead>
-    <tbody class="bg-white divide-y divide-gray-200">
+    <tbody id="bookings_table" class="bg-white divide-y divide-gray-200">
       <% @bookings.each do |booking| %>
-        <tr class="hover:bg-gray-50">
-          <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm font-medium text-gray-900">
-              <%= booking.passenger_name %>
-            </div>
-            <div class="text-sm text-gray-500">
-              <%= booking.passenger_email %>
-            </div>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm font-medium text-gray-900">
-              <%= booking.bus_schedule.route.origin_province.name %> →
-              <%= booking.bus_schedule.route.destination_province.name %>
-            </div>
-            <div class="text-sm text-gray-500">
-              Bus: <%= booking.bus_schedule.bus.plate_number %>
-            </div>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm text-gray-900">
-              <%= booking.bus_schedule.departure_time.strftime("%b %d, %Y") %>
-            </div>
-            <div class="text-sm text-gray-500">
-              <%= booking.bus_schedule.departure_time.strftime("%H:%M") %>
-            </div>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-            <%= booking.number_of_seats %>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-            $<%= number_with_precision(booking.total_price, precision: 2) %>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap">
-              <%= booking.status.capitalize %>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-            <%= link_to "View", admin_booking_path(booking),
-                class: "text-blue-600 hover:text-blue-900" %>
-          </td>
-        </tr>
+        <%= render "booking_row", booking: booking %>
       <% end %>
     </tbody>
   </table>
