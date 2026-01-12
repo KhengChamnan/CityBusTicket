@@ -1,0 +1,22 @@
+<%# Form for editing an existing bus schedule %>
+
+<% content_for(:page_title, "Edit Bus Schedule") %>
+
+<%# Back Link %>
+<div class="mb-6">
+  <%= link_to "← Back to Schedules", admin_bus_schedules_path,
+      class: "text-indigo-600 hover:text-indigo-800" %>
+</div>
+
+<%# Form Card %>
+<div class="bg-white rounded-lg shadow overflow-hidden">
+  <%# Header %>
+  <div class="px-6 py-4 ">
+    <h3 class="text-lg font-semibold text-gray-800">Edit Schedule</h3>
+  </div>
+
+  <div class="p-6">
+    <%# Render the shared form partial %>
+    <%= render "form", bus_schedule: @bus_schedule %>
+  </div>
+</div>

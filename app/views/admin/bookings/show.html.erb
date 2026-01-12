@@ -1,0 +1,110 @@
+<%# Show details of a single booking %>
+
+<% content_for(:page_title, "Booking Details") %>
+
+<%# Back Link %>
+<div class="mb-6">
+  <%= link_to "← Back to Bookings", admin_bookings_path,
+      class: "text-blue-600 hover:text-blue-800" %>
+</div>
+
+<%# Booking Details Card %>
+<div class="bg-white rounded-lg shadow overflow-hidden">
+  <%# Header %>
+  <div class="px-6 py-4">
+    <div class="flex justify-between items-center">
+      <h3 class="text-lg font-semibold text-gray-800">
+        Booking #<%= @booking.id %>
+      </h3>
+        <%= @booking.status.capitalize %>
+    </div>
+  </div>
+
+  <%# Details Grid %>
+  <div class="p-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <%# Passenger Information %>
+      <div>
+        <h4 class="text-sm font-medium text-gray-500 mb-2">Passenger Information</h4>
+        <div class="bg-gray-50 rounded-lg p-4">
+          <p class="text-gray-800"><strong>Name:</strong> <%= @booking.passenger_name %></p>
+          <p class="text-gray-800"><strong>Email:</strong> <%= @booking.passenger_email %></p>
+          <p class="text-gray-800"><strong>Phone:</strong> <%= @booking.passenger_phone_number %></p>
+          <% if @booking.user %>
+            <p class="text-gray-800 mt-2">
+              <strong>Account:</strong> <%= @booking.user.email_address %>
+            </p>
+          <% end %>
+        </div>
+      </div>
+
+      <%# Trip Information %>
+      <div>
+        <h4 class="text-sm font-medium text-gray-500 mb-2">Trip Information</h4>
+        <div class="bg-gray-50 rounded-lg p-4">
+          <p class="text-gray-800">
+            <strong>Route:</strong>
+            <%= @booking.bus_schedule.route.origin_province.name %> →
+            <%= @booking.bus_schedule.route.destination_province.name %>
+          </p>
+          <p class="text-gray-800">
+            <strong>Bus:</strong>
+            <%= @booking.bus_schedule.bus.plate_number %> (<%= @booking.bus_schedule.bus.model %>)
+          </p>
+          <p class="text-gray-800">
+            <strong>Departure:</strong>
+            <%= @booking.bus_schedule.departure_time.strftime("%B %d, %Y at %H:%M") %>
+          </p>
+          <p class="text-gray-800">
+            <strong>Arrival:</strong>
+            <%= @booking.bus_schedule.arrival_time.strftime("%B %d, %Y at %H:%M") %>
+          </p>
+        </div>
+      </div>
+
+      <%# Booking Details %>
+      <div>
+        <h4 class="text-sm font-medium text-gray-500 mb-2">Booking Details</h4>
+        <div class="bg-gray-50 rounded-lg p-4">
+          <p class="text-gray-800"><strong>Number of Seats:</strong> <%= @booking.number_of_seats %></p>
+          <p class="text-gray-800">
+            <strong>Price per Seat:</strong>
+            $<%= number_with_precision(@booking.bus_schedule.seat_price, precision: 2) %>
+          </p>
+          <p class="text-gray-800 text-lg font-semibold mt-2">
+            <strong>Total:</strong>
+            $<%= number_with_precision(@booking.total_price, precision: 2) %>
+          </p>
+        </div>
+      </div>
+
+      <%# Payment Information %>
+      <div>
+        <h4 class="text-sm font-medium text-gray-500 mb-2">Payment Information</h4>
+        <div class="bg-gray-50 rounded-lg p-4">
+          <% if @booking.payment %>
+            <p class="text-gray-800">
+              <strong>Method:</strong> <%= @booking.payment.payment_method %>
+            </p>
+            <p class="text-gray-800">
+              <strong>Amount:</strong>
+              $<%= number_with_precision(@booking.payment.amount, precision: 2) %>
+            </p>
+            <p class="text-gray-800">
+              <strong>Status:</strong>
+                <%= @booking.payment.status&.capitalize || 'Pending' %>
+            </p>
+          <% else %>
+            <p class="text-gray-500">No payment recorded</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <%# Timestamps %>
+    <div class="mt-6 pt-6 border-t border-gray-200 text-sm text-gray-500">
+      <p>Booked on: <%= @booking.created_at.strftime("%B %d, %Y at %H:%M") %></p>
+      <p>Last updated: <%= @booking.updated_at.strftime("%B %d, %Y at %H:%M") %></p>
+    </div>
+  </div>
+</div>

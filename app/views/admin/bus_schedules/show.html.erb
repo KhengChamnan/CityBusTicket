@@ -1,0 +1,85 @@
+<%# Show details of a single bus schedule %>
+
+<% content_for(:page_title, "Bus Schedule Details") %>
+
+<%# Back Link %>
+<div class="mb-6">
+  <%= link_to "← Back to Schedules", admin_bus_schedules_path,
+      class: "text-blue-600 hover:text-blue-800" %>
+</div>
+
+<%# Schedule Details Card %>
+<div class="bg-white rounded-lg shadow overflow-hidden">
+  <%# Header %>
+  <div class="px-6 py-4 ">
+    <div class="flex justify-between items-center">
+      <h3 class="text-lg font-semibold text-gray-800">
+        <%= @bus_schedule.route.origin_province.name %> →
+        <%= @bus_schedule.route.destination_province.name %>
+      </h3>
+        <%= @bus_schedule.status.humanize %>
+    </div>
+  </div>
+
+  <%# Details Grid %>
+  <div class="p-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <%# Bus Information %>
+      <div>
+        <h4 class="text-sm font-medium text-gray-500 mb-2">Bus Information</h4>
+        <div class="bg-gray-50 rounded-lg p-4">
+          <p class="text-gray-800"><strong>Plate:</strong> <%= @bus_schedule.bus.plate_number %></p>
+          <p class="text-gray-800"><strong>Model:</strong> <%= @bus_schedule.bus.model %></p>
+          <p class="text-gray-800"><strong>Capacity:</strong> <%= @bus_schedule.bus.capacity %> seats</p>
+        </div>
+      </div>
+
+      <%# Route Information %>
+      <div>
+        <h4 class="text-sm font-medium text-gray-500 mb-2">Route Information</h4>
+        <div class="bg-gray-50 rounded-lg p-4">
+          <p class="text-gray-800"><strong>Distance:</strong> <%= @bus_schedule.route.distance_km %> km</p>
+          <p class="text-gray-800"><strong>Duration:</strong> <%= @bus_schedule.route.duration_min %> minutes</p>
+        </div>
+      </div>
+
+      <%# Schedule Times %>
+      <div>
+        <h4 class="text-sm font-medium text-gray-500 mb-2">Schedule Times</h4>
+        <div class="bg-gray-50 rounded-lg p-4">
+          <p class="text-gray-800">
+            <strong>Departure:</strong>
+            <%= @bus_schedule.departure_time.strftime("%B %d, %Y at %H:%M") %>
+          </p>
+          <p class="text-gray-800">
+            <strong>Arrival:</strong>
+            <%= @bus_schedule.arrival_time.strftime("%B %d, %Y at %H:%M") %>
+          </p>
+        </div>
+      </div>
+
+      <%# Pricing & Seats %>
+      <div>
+        <h4 class="text-sm font-medium text-gray-500 mb-2">Pricing & Availability</h4>
+        <div class="bg-gray-50 rounded-lg p-4">
+          <p class="text-gray-800">
+            <strong>Seat Price:</strong> $<%= number_with_precision(@bus_schedule.seat_price, precision: 2) %>
+          </p>
+          <p class="text-gray-800">
+            <strong>Available Seats:</strong> <%= @bus_schedule.available_seats %>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <%# Action Buttons %>
+    <div class="mt-6 pt-6 border-t border-gray-200 flex gap-4">
+      <%= link_to "Edit Schedule", edit_admin_bus_schedule_path(@bus_schedule),
+          class: "bg-blue-600 text-white px-4 py-2 rounded-lg " %>
+      <%= link_to "Delete Schedule", admin_bus_schedule_path(@bus_schedule),
+          method: :delete,
+          data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this schedule?" },
+          class: "bg-red-600 text-white px-4 py-2 rounded-lg " %>
+    </div>
+  </div>
+</div>
