@@ -11,6 +11,7 @@ class Booking < ApplicationRecord
 
   # callback for realtime update
   after_create_commit :broadcast_new_booking
+  after_update_commit :broadcast_new_booking
 
   private
   def calculate_total_price

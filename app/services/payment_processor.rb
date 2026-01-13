@@ -5,7 +5,7 @@ class PaymentProcessor
 
   def call
     ActiveRecord::Base.transaction do
-      deduct_user_credit
+      deduct_user_credit unless @payment.payment_method == "cash"
       confirm_booking
       @payment.update!(status: :completed)
       @payment

@@ -7,7 +7,7 @@ class Api::PaymentsController < Api::BaseController
     payment_params = params.require(:payment).permit(:booking_id, :payment_method)
     booking = @current_user.bookings.find(payment_params[:booking_id])
     payment = Payment.new(payment_params.merge(booking: booking))
-    if @current_user.credit < booking.total_price
+    if payment_params[:payment_method] != "cash" && @current_user.credit < booking.total_price
       render json: { status: "error", errors: [ "Insufficient credit" ] }, status: :unprocessable_entity
       return
     end
